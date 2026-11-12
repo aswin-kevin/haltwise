@@ -1,0 +1,72 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "haltwise"
+version = "0.1.0.dev0"
+description = "Stop doomed LLM-agent runs early, with a guaranteed cap on how many good runs you kill."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+authors = [{ name = "haltwise contributors" }]
+keywords = ["llm", "agents", "monitoring", "early-stopping", "conformal-prediction", "reliability"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Typing :: Typed",
+]
+dependencies = ["numpy>=1.24"]
+
+[project.optional-dependencies]
+datasets = ["pyarrow>=14"]  # reading public trajectory datasets (parquet)
+
+[dependency-groups]
+dev = ["pytest>=8", "pytest-cov>=5", "ruff>=0.6", "mypy>=1.11"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/haltwise"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/haltwise", "tests", "README.md", "LICENSE", "pyproject.toml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "trials"]
+pythonpath = ["."]
+addopts = "-q --strict-markers"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF", "N", "PL", "PT", "D"]
+ignore = [
+    "D100", "D104", "D105", "D107",  # module/package/magic/__init__ docstrings: not required
+    "PLR2004",                       # magic values are fine in tests and thresholds
+    "PLR0913",                       # a few constructors legitimately take many options
+]
+
+allowed-confusables = ["α", "θ", "⇔", "⌈", "⌉", "–"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["D", "PLR2004"]
+"examples/**" = ["D", "T201"]
+"benchmarks/**" = ["D", "T201"]
+"trials/**" = ["D", "T201"]
+
+[tool.mypy]
+strict = true
+python_version = "3.10"
+files = ["src", "tests", "trials"]
+
+[[tool.mypy.overrides]]
+module = ["pyarrow", "pyarrow.*"]
+ignore_missing_imports = true
