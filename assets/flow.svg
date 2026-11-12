@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="330" viewBox="0 0 960 330" role="img" aria-labelledby="title desc">
+  <title id="title">How haltwise works</title>
+  <desc id="desc">Each step of an agent run is scored for risk of failure, a stopping policy weighs the recent risks against a threshold calibrated on your past runs, and haltwise decides to continue, warn or stop. Calibration caps the share of good runs stopped; AdaptiveMonitor keeps that cap on target as your agent changes.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#8b949e"/>
+    </marker>
+    <style>
+      .card { fill: #ffffff; stroke: #d0d7de; stroke-width: 1.5; }
+      .accent { fill: #f6f0ff; stroke: #8250df; stroke-width: 1.5; }
+      .calib { fill: #f0f7ff; stroke: #0969da; stroke-width: 1.5; stroke-dasharray: 6 4; }
+      .title { font: 600 17px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; fill: #1f2328; }
+      .body { font: 400 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; fill: #59636e; }
+      .mono { font: 500 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #8250df; }
+      .stop { font: 600 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #cf222e; }
+      .go { font: 600 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #1a7f37; }
+      .warn { font: 600 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #9a6700; }
+      .flow { stroke: #8b949e; stroke-width: 2; fill: none; }
+    </style>
+  </defs>
+
+  <!-- 1. Agent steps -->
+  <rect class="card" x="10" y="20" width="200" height="140" rx="12"/>
+  <text class="title" x="30" y="52">Your agent</text>
+  <text class="body" x="30" y="78">every step it takes:</text>
+  <text class="mono" x="30" y="104">tool_call  search</text>
+  <text class="mono" x="30" y="124">tool_result  ok</text>
+  <text class="mono" x="30" y="144">error  1 failed</text>
+
+  <path class="flow" d="M 212 90 L 252 90" marker-end="url(#arrow)"/>
+
+  <!-- 2. Scorer -->
+  <rect class="card" x="256" y="20" width="200" height="140" rx="12"/>
+  <text class="title" x="276" y="52">Scorer</text>
+  <text class="body" x="276" y="78">risk this run fails,</text>
+  <text class="body" x="276" y="96">from what it did so far</text>
+  <text class="mono" x="276" y="128">step cap · rules ·</text>
+  <text class="mono" x="276" y="148">learned · LLM</text>
+
+  <path class="flow" d="M 458 90 L 498 90" marker-end="url(#arrow)"/>
+
+  <!-- 3. Policy -->
+  <rect class="card" x="502" y="20" width="200" height="140" rx="12"/>
+  <text class="title" x="522" y="52">Policy</text>
+  <text class="body" x="522" y="78">is the evidence strong</text>
+  <text class="body" x="522" y="96">enough to stop?</text>
+  <text class="mono" x="522" y="128">2 of the last 3</text>
+  <text class="mono" x="522" y="148">steps too risky</text>
+
+  <path class="flow" d="M 704 90 L 744 90" marker-end="url(#arrow)"/>
+
+  <!-- 4. Decision -->
+  <rect class="accent" x="748" y="20" width="200" height="140" rx="12"/>
+  <text class="title" x="768" y="52">Decision</text>
+  <text class="body" x="768" y="78">after every step</text>
+  <text class="go" x="768" y="106">continue</text>
+  <text class="warn" x="768" y="128">warn</text>
+  <text class="stop" x="768" y="150">stop  + reason</text>
+
+  <!-- Calibration feeds the policy's threshold -->
+  <rect class="calib" x="256" y="208" width="446" height="104" rx="12"/>
+  <text class="title" x="276" y="240">Threshold, calibrated on your past runs</text>
+  <text class="body" x="276" y="264">At most α of runs that would have succeeded get stopped:</text>
+  <text class="body" x="276" y="284">one run per task, on average or with 95% confidence.</text>
+  <text class="body" x="276" y="304">AdaptiveMonitor keeps it on target as your agent changes.</text>
+  <path class="flow" d="M 602 206 L 602 164" marker-end="url(#arrow)"/>
+</svg>

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "haltwise"
-version = "0.1.0.dev0"
+version = "0.1.0"
 description = "Stop doomed LLM-agent runs early, with a guaranteed cap on how many good runs you kill."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -16,10 +16,20 @@ classifiers = [
     "Intended Audience :: Developers",
     "Intended Audience :: Science/Research",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
     "Typing :: Typed",
 ]
 dependencies = ["numpy>=1.24"]
+
+[project.urls]
+Homepage = "https://github.com/aswin-kevin/haltwise"
+Repository = "https://github.com/aswin-kevin/haltwise"
+Issues = "https://github.com/aswin-kevin/haltwise/issues"
+Changelog = "https://github.com/aswin-kevin/haltwise/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 datasets = ["pyarrow>=14"]  # reading public trajectory datasets (parquet)
@@ -31,7 +41,7 @@ dev = ["pytest>=8", "pytest-cov>=5", "ruff>=0.6", "mypy>=1.11"]
 packages = ["src/haltwise"]
 
 [tool.hatch.build.targets.sdist]
-include = ["src/haltwise", "tests", "README.md", "LICENSE", "pyproject.toml"]
+include = ["src/haltwise", "tests", "README.md", "LICENSE", "CHANGELOG.md", "pyproject.toml"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests", "trials"]
