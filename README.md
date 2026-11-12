@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/aswin-kevin/haltwise/main/assets/flow.svg" alt="haltwise: every step of your agent is scored for risk of failure, a policy weighs the recent risks against a threshold calibrated on your past runs, and haltwise decides to continue, warn or stop" width="760">
+  <img src="https://raw.githubusercontent.com/aswin-kevin/haltwise/main/assets/hero.jpg" alt="haltwise: a Monitor calibrated on past runs watches three agent runs; one is solved, one loops and is stopped with tokens saved, one gets a warning and continues; at most 5% of good runs are stopped" width="720">
 </p>
 
 <p align="center">
@@ -61,6 +61,16 @@ so the share of good runs you stop is capped at a number you choose.
 | **Policy** | Decides when the risk is convincing enough to stop, e.g. "2 of the last 3 steps". |
 | **false_kill_rate** | The share of runs that *would have succeeded* that you accept stopping. Calibration enforces it. |
 | **Monitor** / **Watch** | The calibrated decision-maker, and its per-run guard that you feed steps. |
+
+## How it works
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/aswin-kevin/haltwise/main/assets/flow.svg" alt="Each step of an agent run is scored for risk of failure, a policy weighs the recent risks against a threshold calibrated on your past runs, and haltwise decides to continue, warn or stop" width="760">
+</p>
+
+After every step, a **scorer** estimates how likely the run is to fail, and a **policy**
+compares the recent risks with a threshold. The threshold is **calibrated on your past
+runs**, so at most the share of good runs you chose gets stopped.
 
 ## Quickstart
 
