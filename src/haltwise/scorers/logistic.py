@@ -32,7 +32,9 @@ def _matmul(a: FloatArray, b: FloatArray) -> FloatArray:
 
 def _sigmoid(z: FloatArray) -> FloatArray:
     # exp(-log(1 + e^-z)) is the overflow-safe form of 1 / (1 + e^-z).
-    return np.exp(-np.logaddexp(0.0, -z))
+    # The annotation keeps older numpy stubs (which type np.exp as Any) type-safe.
+    result: FloatArray = np.exp(-np.logaddexp(0.0, -z))
+    return result
 
 
 class LogisticRegression:
